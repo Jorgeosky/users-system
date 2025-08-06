@@ -1,25 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from 'react-router';
+import { UserProvider } from './context/UserContext';
+import Login from './view/Login';
+import UserList from './view/UserList';
+import PrivateRoute from './view/PrivateRouter';
 
 function App() {
+  const [token, setToken] = React.useState<string | null>(localStorage.getItem("access_token"));
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserProvider>
+    <Routes>
+        <Route element={<Login setToken={setToken} />} path="/" />
+        <Route 
+            path="/list" 
+            element={
+              <PrivateRoute>
+                <UserList token={token} />
+              </PrivateRoute>
+            } 
+          />
+    </Routes>
+    </UserProvider>
   );
 }
 
