@@ -1,46 +1,108 @@
-# Getting Started with Create React App
+# Users System Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Bienvenido a **Users System Frontend**, una aplicación React + TypeScript para la gestión y autenticación de usuarios, conectada a la API de Django.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## ✨ Características
 
-### `npm start`
+- **Login con JWT** y almacenamiento seguro del token
+- **Registro de usuarios** desde el frontend
+- **Listado de usuarios** (solo para autenticados)
+- **Protección de rutas** con Context API
+- **Gestión de sesión** (login/logout)
+- **Consumo de API** con Axios
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+---
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## ⚡ Instalación rápida
 
-### `npm test`
+1. **Clona el repositorio:**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+   ```bash
+   git clone https://github.com/tuusuario/users-system.git
+   cd users-system
+   ```
 
-### `npm run build`
+2. **Instala dependencias:**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+   ```bash
+   npm install
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. **Configura la URL de la API:**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   - Edita el archivo `.env` y agrega:
+     ```
+     API_URL=http://localhost:8000
+     ```
 
-### `npm run eject`
+4. **Inicia la aplicación:**
+   ```bash
+   npm start
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+---
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🔑 Autenticación
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- **Login:**  
+  Ingresa tu usuario y contraseña para obtener el token JWT.
+- **Registro:**  
+  Puedes crear un usuario desde la pantalla de registro, sin necesidad de estar autenticado.
+- **Logout:**  
+  Elimina el token y cierra la sesión.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+---
 
-## Learn More
+## 🖥️ Estructura del proyecto
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+users-system/
+├── src/
+│   ├── components/
+│   ├── context/
+│   ├── pages/
+│   ├── services/
+│   ├── App.tsx
+│   └── ...
+├── public/
+├── package.json
+└── ...
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
+
+## 📚 Principales pantallas
+
+- **Login:**  
+  Acceso seguro con JWT.
+- **Registro:**  
+  Formulario para crear nuevos usuarios.
+- **Listado de usuarios:**  
+  Solo visible para usuarios autenticados.
+
+---
+
+## 🔗 Integración con el backend
+
+Asegúrate de que la API de Django esté corriendo y la URL esté correctamente configurada en `.env`.
+
+---
+
+## 📝 Notas
+
+- Cambia la URL de la API según tu entorno.
+- El token se almacena en `localStorage` para mantener la sesión.
+- Puedes personalizar los componentes y estilos según tus necesidades.
+
+---
+
+## 📄 Licencia
+
+Este proyecto está bajo la licencia MIT.
+
+---
+
+¡Gracias por usar **Users System Frontend**!  
+¿Tienes dudas o sugerencias? Abre un issue o contacta al equipo
