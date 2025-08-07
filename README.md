@@ -77,10 +77,14 @@ users-system/
 
 - **Login:**  
   Acceso seguro con JWT.
-- **Registro:**  
-  Formulario para crear nuevos usuarios.
+
+  <img width="1907" height="909" alt="image" src="https://github.com/user-attachments/assets/a6cdc115-dc99-4f9f-a31d-19553f761356" />
+  
 - **Listado de usuarios:**  
   Solo visible para usuarios autenticados.
+
+  <img width="1887" height="648" alt="image" src="https://github.com/user-attachments/assets/18c03604-9610-4eb3-b214-1b2ea30ccdf2" />
+
 
 ---
 
