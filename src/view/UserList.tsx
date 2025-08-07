@@ -16,23 +16,17 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import {
-  Add,
-  FilterList,
-  PersonAdd,
-  Download,
-  Delete,
-  Edit,
-  Logout,
-} from '@mui/icons-material';
+import { Add, PersonAdd, Delete, Edit, Logout } from '@mui/icons-material';
 import UserModal from '../components/UserModal';
 
 const UserList = ({ token }: any) => {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<any>([]);
   const [change, setChange] = useState(false);
   const [error, setError] = useState('');
   const [openModal, setOpenModal] = useState(false);
   const [idModal, setIdModal] = useState(0);
+  const { user: userGlobal, login, logout } = useUser();
+  const usernameGlobal = localStorage.getItem('username');
   const [type, setType] = useState<'delete' | 'put' | 'post' | 'voucher'>(
     'delete',
   );
@@ -45,7 +39,6 @@ const UserList = ({ token }: any) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const { logout } = useUser();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -55,6 +48,24 @@ const UserList = ({ token }: any) => {
     setError('');
     logout(() => navigate('/'));
   };
+
+  useEffect(() => {
+    console.log('yser1', users);
+    console.log('aca1', userGlobal);
+    if (
+      userGlobal === null ||
+      userGlobal === undefined ||
+      userGlobal?.id === 0
+    ) {
+      console.log('aca');
+      console.log('yser2', users);
+      const userGlobal = users.filter(
+        (item: any) => item.username === usernameGlobal,
+      );
+      console.log(userGlobal[0]);
+      login(userGlobal[0], () => {});
+    }
+  }, [users]);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -76,7 +87,7 @@ const UserList = ({ token }: any) => {
     if (token) {
       fetchUsers();
     }
-  }, [token, change]);
+  }, [token, change, logout, navigate]);
 
   return error ? (
     <>
@@ -108,6 +119,7 @@ const UserList = ({ token }: any) => {
               variant="contained"
               startIcon={<PersonAdd />}
               onClick={() => handleModal('post')}
+              disabled={userGlobal?.role !== 'admin' ? true : false}
               sx={{ textTransform: 'none', backgroundColor: '#008CFF' }}
             >
               Crear nuevo usuario
@@ -133,6 +145,7 @@ const UserList = ({ token }: any) => {
               <TableHead>
                 <TableRow>
                   <TableCell>ID</TableCell>
+                  <TableCell>ROL</TableCell>
                   <TableCell>USUARIO</TableCell>
                   <TableCell>EMAIL</TableCell>
                   <TableCell>VOUCHER</TableCell>
@@ -147,6 +160,7 @@ const UserList = ({ token }: any) => {
                 {users.map((user: User) => (
                   <TableRow key={user.id}>
                     <TableCell>{user.id}</TableCell>
+                    <TableCell>{user.role}</TableCell>
                     <TableCell>{user.username}</TableCell>
                     <TableCell>{user.email}</TableCell>
                     <TableCell>{user.voucher?.slice(0, 8)}</TableCell>
@@ -161,9 +175,21 @@ const UserList = ({ token }: any) => {
                       </>
                     )}
                     <TableCell align="center">
-                      <IconButton>
+                      <IconButton
+                        disabled={
+                          userGlobal?.role === 'admin' ||
+                          userGlobal?.id === user.id
+                            ? false
+                            : true
+                        }
+                      >
                         <Add
-                          color="success"
+                          color={
+                            userGlobal?.role === 'admin' ||
+                            userGlobal?.id === user.id
+                              ? 'success'
+                              : undefined
+                          }
                           fontSize="large"
                           onClick={() => {
                             handleModal('voucher');
@@ -171,9 +197,23 @@ const UserList = ({ token }: any) => {
                           }}
                         />
                       </IconButton>
-                      <IconButton>
+                      <IconButton
+                        disabled={
+                          user.role === 'admin' ||
+                          (user.id !== userGlobal?.id &&
+                            userGlobal?.role !== 'admin')
+                            ? true
+                            : false
+                        }
+                      >
                         <Edit
-                          color="primary"
+                          color={
+                            user.role === 'admin' ||
+                            (user.id !== userGlobal?.id &&
+                              userGlobal?.role !== 'admin')
+                              ? undefined
+                              : 'primary'
+                          }
                           fontSize="large"
                           onClick={() => {
                             handleModal('put');
@@ -181,9 +221,23 @@ const UserList = ({ token }: any) => {
                           }}
                         />
                       </IconButton>
-                      <IconButton>
+                      <IconButton
+                        disabled={
+                          user.role === 'admin' ||
+                          (user.id !== userGlobal?.id &&
+                            userGlobal?.role !== 'admin')
+                            ? true
+                            : false
+                        }
+                      >
                         <Delete
-                          color="error"
+                          color={
+                            user.role === 'admin' ||
+                            (user.id !== userGlobal?.id &&
+                              userGlobal?.role !== 'admin')
+                              ? undefined
+                              : 'error'
+                          }
                           fontSize="large"
                           onClick={() => {
                             handleModal('delete');

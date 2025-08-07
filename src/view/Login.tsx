@@ -49,6 +49,7 @@ const Login = ({ setToken }: any) => {
       const { access, refresh } = response.data;
       localStorage.setItem('access_token', access);
       localStorage.setItem('refresh_token', refresh);
+      localStorage.setItem('username', username);
       setToken(access);
       if (rememberMe) {
         localStorage.setItem('remember_me', 'true');
@@ -59,7 +60,7 @@ const Login = ({ setToken }: any) => {
         localStorage.removeItem('username');
         localStorage.removeItem('password');
       }
-      login({ id: 1, username }, () => {
+      login({ id: 0, username }, () => {
         navigate('/list');
       });
     } catch (err) {

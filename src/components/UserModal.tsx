@@ -78,7 +78,6 @@ const UserModal = ({
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [voucher, setVoucher] = useState(generarVoucher());
-  const [role, setRole] = useState('user');
   const [error, setError] = useState<any>(null);
 
   const handlerClose = async (condition: boolean) => {
@@ -86,7 +85,6 @@ const UserModal = ({
       setUsername('');
       setPassword('');
       setEmail('');
-      setRole('user');
       setVoucher(generarVoucher());
       setModal(false);
     } else {
@@ -103,7 +101,10 @@ const UserModal = ({
         }
         switch (type) {
           case 'post':
-            await createUser({ username, password, email, role }, token);
+            await createUser(
+              { username, password, email, role: 'user' },
+              token,
+            );
             break;
           case 'put':
             await updateUser(idModal, updateData, token);
@@ -126,7 +127,6 @@ const UserModal = ({
         setPassword('');
         setEmail('');
         setVoucher(generarVoucher());
-        setRole('user');
         setChange(!change);
         setModal(false);
       } catch (err) {
@@ -210,14 +210,6 @@ const UserModal = ({
                     margin="normal"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <TextField
-                    fullWidth
-                    label="role"
-                    variant="outlined"
-                    margin="normal"
-                    value={role}
-                    onChange={(e) => setRole(e.target.value)}
                   />
                 </>
               );
